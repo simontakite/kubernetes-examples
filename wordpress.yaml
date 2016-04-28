@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu request for container
+      wordpress'
+  labels:
+    name: wordpress
+  name: wordpress
+  namespace: default
+  resourceVersion: "15690"
+  selfLink: /api/v1/namespaces/default/pods/wordpress
+spec:
+  containers:
+  - env:
+    - name: WORDPRESS_DB_PASSWORD
+      value: p4ssp4ss
+    image: wordpress
+    imagePullPolicy: Always
+    name: wordpress
+    ports:
+    - containerPort: 80
+      name: wordpress
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 100m
+    terminationMessagePath: /dev/termination-log
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-rbjg9
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  nodeName: kubernetes-node-3
+  restartPolicy: Always
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: default-token-rbjg9
+    secret:
+      secretName: default-token-rbjg9
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: 2016-04-25T21:47:30Z
+    status: "True"
+    type: Ready
+  hostIP: 10.245.1.5
+  phase: Running
+  podIP: 10.246.52.4
